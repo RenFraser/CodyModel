@@ -1,4 +1,10 @@
 {
   "version": "2.0",
-  "sources": ["model"]
+  "sources": ["model"],
+  "plugins": {
+    "typescript-codegen": {
+      "package": "@cody/client",
+      "packageVersion": "1.0.0"
+    }
+  }
 }
