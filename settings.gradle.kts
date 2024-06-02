@@ -12,4 +12,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "quickstart-gradle"
+rootProject.name = "CodyModel"
