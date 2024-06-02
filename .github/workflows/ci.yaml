@@ -19,11 +19,11 @@ jobs:
         java-version: '17'
         distribution: 'corretto'
 
-    - name: Test Smithy
-      run: ./gradlew testSmithyBuild
-
     - name: Build Smithy
       run: ./gradlew smithyBuild
+
+    - name: Lint Smithy
+      run: ./gradlew testSmithyBuild
 
   dependabot:
       permissions: write-all
