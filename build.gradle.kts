@@ -17,14 +17,12 @@ repositories {
 }
 
 dependencies {
-    val smithyVersion: String by project
-
-    smithyCli("software.amazon.smithy:smithy-cli:$smithyVersion")
+    smithyCli("software.amazon.smithy:smithy-cli:1.49.0")
     smithyBuild("software.amazon.smithy.typescript:smithy-aws-typescript-codegen:0.20.1")
 
-    implementation("software.amazon.smithy:smithy-model:$smithyVersion")
-    implementation("software.amazon.smithy:smithy-linters:$smithyVersion")
-    implementation("software.amazon.smithy:smithy-aws-traits:$smithyVersion")
+    implementation("software.amazon.smithy:smithy-model:1.49.0")
+    implementation("software.amazon.smithy:smithy-linters:1.49.0")
+    implementation("software.amazon.smithy:smithy-aws-traits:1.49.0")
 
 }
 
