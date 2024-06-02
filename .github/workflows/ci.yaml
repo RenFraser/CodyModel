@@ -1,0 +1,24 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'corretto'
+
+    - name: Test Smithy
+      run: ./gradlew testSmithyBuild
+
+    - name: Build Smithy
+      run: ./gradlew smithyBuild
