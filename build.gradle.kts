@@ -22,10 +22,3 @@ dependencies {
     implementation("software.amazon.smithy:smithy-linters:1.49.0")
     implementation("software.amazon.smithy:smithy-aws-traits:1.49.0")
 }
-
-// TODO: ensure I run testSmithyBuild somewhere - it's what validates stuff
-tasks {
-    smithyBuild {
-//        dependsOn(testSmithyBuild)
-    }
-}
