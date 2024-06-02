@@ -14,6 +14,7 @@ resource Bedrock {
 operation SendText {
     input: SendTextInput
     output: SendTextOutput
+    errors: [InputLimitExceededException, UnexpectedMessageTypeError]
 }
 
 @input
@@ -33,6 +34,7 @@ structure SendTextOutput {
 operation SendImage {
     input: SendImageInput
     output: SendImageOutput
+    errors: [InputLimitExceededException, UnexpectedMessageTypeError]
 }
 
 @input
@@ -52,6 +54,7 @@ structure SendImageOutput {
 operation SendDocument {
     input: SendDocumentInput
     output: SendDocumentOutput
+    errors: [InputLimitExceededException, UnexpectedMessageTypeError]
 }
 
 @input

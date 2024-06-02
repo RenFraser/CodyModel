@@ -16,6 +16,7 @@ resource File {
 operation CreateFile {
     input: CreateFileInput
     output: CreateFileOutput
+    errors: [LocationNotWritable, ContainingLocationNotFoundException]
 }
 
 @input
@@ -55,6 +56,7 @@ structure ReadFileOutput {
 operation UpdateFile {
     input: UpdateFileInput
     output: UpdateFileOutput
+    errors: [ResourceNotFoundException, LocationNotWritable]
 }
 
 @input
@@ -74,6 +76,7 @@ structure UpdateFileOutput {}
 operation DeleteFile {
     input: DeleteFileInput
     output: DeleteFileOutput
+    errors: [ResourceNotFoundException]
 }
 
 @input

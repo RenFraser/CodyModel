@@ -4,23 +4,41 @@ namespace com.cody.model
 
 resource Search {
     operations: [
-        SearchFiles
+        SearchFileNames
+        SearchFileContent
     ]
 }
 
-@http(method: "POST", uri: "/api/search")
-operation SearchFiles {
-    input: SearchFilesInput
-    output: SearchFilesOutput
+@http(method: "POST", uri: "/api/search/names")
+operation SearchFileNames {
+    input: SearchFileNamesInput
+    output: SearchFileNamesOutput
 }
 
-structure SearchFilesInput {
+structure SearchFileNamesInput {
     @required
     @httpPayload
     query: String
 }
 
-structure SearchFilesOutput {
+structure SearchFileNamesOutput {
+    @required
+    results: PathsList
+}
+
+@http(method: "POST", uri: "/api/search/content")
+operation SearchFileContent {
+    input: SearchFileContentInput
+    output: SearchFileContentOutput
+}
+
+structure SearchFileContentInput {
+    @required
+    @httpPayload
+    query: String
+}
+
+structure SearchFileContentOutput {
     @required
     results: PathsList
 }

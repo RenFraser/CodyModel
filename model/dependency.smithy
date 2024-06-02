@@ -4,25 +4,47 @@ namespace com.cody.model
 
 resource Dependency {
     operations: [
-        ResolveDependencies
+        ListDependencies
+        HasDependencies
     ]
 }
 
-@http(method: "POST", uri: "/api/dependencies")
-operation ResolveDependencies {
-    input: ResolveDependenciesInput
-    output: ResolveDependenciesOutput
+@http(method: "GET", uri: "/api/dependencies")
+operation ListDependencies {
+    input: ListDependenciesInput
+    output: ListDependenciesOutput
+    errors: [ResourceNotFoundException, DependenciesNotFoundException, ResourceNotReadable]
 }
 
 @input
-structure ResolveDependenciesInput {
+structure ListDependenciesInput {
     @required
-    @httpPayload
+    @httpHeader("X-File-Path")
     path: String
 }
 
 @output
-structure ResolveDependenciesOutput {
+structure ListDependenciesOutput {
     @required
     dependencies: PathsList
+}
+
+@http(method: "GET", uri: "/api/dependencies")
+operation HasDependencies {
+    input: HasDependenciesInput
+    output: HasDependenciesOutput
+    errors: [ResourceNotFoundException, ResourceNotReadable]
+}
+
+@input
+structure HasDependenciesInput {
+    @required
+    @httpHeader("X-File-Path")
+    path: String
+}
+
+@output
+structure HasDependenciesOutput {
+    @required
+    dependencies: Boolean
 }
