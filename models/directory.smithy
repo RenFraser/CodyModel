@@ -5,6 +5,7 @@ resource Directory {
     operations: [ ListDirectory ]
 }
 
+@readonly
 @http(method: "GET", uri: "/api/directory")
 operation ListDirectory {
     input: ListDirectoryInput

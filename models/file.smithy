@@ -14,7 +14,6 @@ operation CreateFile {
 @input
 structure CreateFileInput {
     @required
-    @httpPayload
     path: String
 
     @required
@@ -25,6 +24,7 @@ structure CreateFileInput {
 structure CreateFileOutput {
 }
 
+@readonly
 @http(method: "GET", uri: "/api/file")
 operation ReadFile {
     input: ReadFileInput
@@ -44,6 +44,7 @@ structure ReadFileOutput {
     content: String
 }
 
+@idempotent
 @http(method: "PUT", uri: "/api/file")
 operation UpdateFile {
     input: UpdateFileInput
@@ -56,7 +57,6 @@ structure UpdateFileInput {
     path: String
 
     @required
-    @httpPayload
     content: String
 }
 
@@ -64,6 +64,7 @@ structure UpdateFileInput {
 structure UpdateFileOutput {
 }
 
+@idempotent
 @http(method: "DELETE", uri: "/api/file")
 operation DeleteFile {
     input: DeleteFileInput
@@ -73,6 +74,7 @@ operation DeleteFile {
 @input
 structure DeleteFileInput {
     @required
+    @httpHeader("X-File-Path")
     path: String
 }
 
