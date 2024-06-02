@@ -23,3 +23,9 @@ dependencies {
     implementation("software.amazon.smithy:smithy-model:$smithyVersion")
     implementation("software.amazon.smithy:smithy-linters:$smithyVersion")
 }
+
+tasks {
+    smithyBuild {
+        dependsOn(testSmithyBuild)
+    }
+}
