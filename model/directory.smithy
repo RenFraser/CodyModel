@@ -1,8 +1,10 @@
 namespace com.cody.model
 
 resource Directory {
-    identifiers: { path: String },
-    operations: [ ListDirectory ]
+    identifiers: { path: String }
+    operations: [
+        ListDirectory
+    ]
 }
 
 @readonly

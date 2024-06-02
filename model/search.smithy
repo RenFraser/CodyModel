@@ -1,13 +1,14 @@
 namespace com.cody.model
 
-
 resource Search {
-    operations: [ SearchFiles ]
+    operations: [
+        SearchFiles
+    ]
 }
 
 @http(method: "POST", uri: "/api/search")
 operation SearchFiles {
-    input: SearchFilesInput,
+    input: SearchFilesInput
     output: SearchFilesOutput
 }
 

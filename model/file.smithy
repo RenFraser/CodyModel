@@ -1,8 +1,13 @@
 namespace com.cody.model
 
 resource File {
-    identifiers: { path: String },
-    operations: [ CreateFile, ReadFile, UpdateFile, DeleteFile ]
+    identifiers: { path: String }
+    operations: [
+        CreateFile
+        ReadFile
+        UpdateFile
+        DeleteFile
+    ]
 }
 
 @http(method: "POST", uri: "/api/file")
@@ -21,8 +26,7 @@ structure CreateFileInput {
 }
 
 @output
-structure CreateFileOutput {
-}
+structure CreateFileOutput {}
 
 @readonly
 @http(method: "GET", uri: "/api/file")
@@ -61,8 +65,7 @@ structure UpdateFileInput {
 }
 
 @output
-structure UpdateFileOutput {
-}
+structure UpdateFileOutput {}
 
 @idempotent
 @http(method: "DELETE", uri: "/api/file")
@@ -79,4 +82,4 @@ structure DeleteFileInput {
 }
 
 @output
-structure DeleteFileOutput { }
+structure DeleteFileOutput {}

@@ -2,10 +2,10 @@ namespace com.cody.model
 
 resource Review {
     operations: [
-        RequestSecurityReview,
-        RequestDesignReview,
-        RequestPerformanceReview,
-        RequestOperationsReview,
+        RequestSecurityReview
+        RequestDesignReview
+        RequestPerformanceReview
+        RequestOperationsReview
         RequestTestReview
     ]
 }

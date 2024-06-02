@@ -1,7 +1,9 @@
 namespace com.cody.model
 
 resource Dependency {
-    operations: [ ResolveDependencies ]
+    operations: [
+        ResolveDependencies
+    ]
 }
 
 @http(method: "POST", uri: "/api/dependencies")

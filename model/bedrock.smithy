@@ -1,7 +1,11 @@
 namespace com.cody.model
 
 resource Bedrock {
-    operations: [ SendText, SendImage, SendDocument ]
+    operations: [
+        SendText
+        SendImage
+        SendDocument
+    ]
 }
 
 @http(method: "POST", uri: "/api/bedrock/text")
