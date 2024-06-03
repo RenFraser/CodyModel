@@ -15,7 +15,11 @@ resource Directory {
 operation ReadDirectory {
     input: ReadDirectoryInput
     output: ReadDirectoryOutput
-    errors: [ResourceNotFoundException, ResourceNotReadable]
+    errors: [
+        ResourceNotFoundException
+        ResourceNotReadable
+        InternalServerErrorException
+    ]
 }
 
 @input
@@ -36,7 +40,12 @@ structure ReadDirectoryOutput {
 operation CreateDirectory {
     input: CreateDirectoryInput
     output: CreateDirectoryOutput
-    errors: [LocationNotWritable, ContainingLocationNotFoundException]
+    errors: [
+        ConflictException
+        LocationNotWritable
+        ContainingLocationNotFoundException
+        InternalServerErrorException
+    ]
 }
 
 @input
@@ -47,4 +56,4 @@ structure CreateDirectoryInput {
 }
 
 @output
-structure CreateDirectoryOutput { }
+structure CreateDirectoryOutput {}

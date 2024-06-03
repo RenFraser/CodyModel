@@ -16,30 +16,50 @@ resource Review {
 operation RequestSecurityReview {
     input: RequestSecurityReviewInput
     output: RequestSecurityReviewOutput
+    errors: [
+        BadRequestException
+        InternalServerErrorException
+    ]
 }
 
 @http(method: "POST", uri: "/api/review/design")
 operation RequestDesignReview {
     input: RequestDesignReviewInput
     output: RequestDesignReviewOutput
+    errors: [
+        BadRequestException
+        InternalServerErrorException
+    ]
 }
 
 @http(method: "POST", uri: "/api/review/performance")
 operation RequestPerformanceReview {
     input: RequestPerformanceReviewInput
     output: RequestPerformanceReviewOutput
+    errors: [
+        BadRequestException
+        InternalServerErrorException
+    ]
 }
 
 @http(method: "POST", uri: "/api/review/operations")
 operation RequestOperationsReview {
     input: RequestOperationsReviewInput
     output: RequestOperationsReviewOutput
+    errors: [
+        BadRequestException
+        InternalServerErrorException
+    ]
 }
 
 @http(method: "POST", uri: "/api/review/tests")
 operation RequestTestReview {
     input: RequestTestReviewInput
     output: RequestTestReviewOutput
+    errors: [
+        BadRequestException
+        InternalServerErrorException
+    ]
 }
 
 @input

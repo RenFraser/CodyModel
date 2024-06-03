@@ -50,14 +50,3 @@ structure ResourceNotReadable {
     @required
     message: String
 }
-
-// TODO: collect these sorts of blanket errors and apply them to all operations.
-// TODO: bad request, and others?
-@error("server")
-@httpError(500)
-structure InternalServiceException {
-    @required
-    message: String
-}
-
-

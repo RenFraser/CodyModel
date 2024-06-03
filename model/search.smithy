@@ -13,6 +13,10 @@ resource Search {
 operation SearchFileNames {
     input: SearchFileNamesInput
     output: SearchFileNamesOutput
+    errors: [
+        BadRequestException
+        InternalServerErrorException
+    ]
 }
 
 structure SearchFileNamesInput {
@@ -30,6 +34,10 @@ structure SearchFileNamesOutput {
 operation SearchFileContent {
     input: SearchFileContentInput
     output: SearchFileContentOutput
+    errors: [
+        BadRequestException
+        InternalServerErrorException
+    ]
 }
 
 structure SearchFileContentInput {

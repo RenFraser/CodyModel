@@ -9,11 +9,16 @@ resource Dependency {
     ]
 }
 
-@http(method: "GET", uri: "/api/dependencies")
+@http(method: "GET", uri: "/api/dependencies/list")
 operation ListDependencies {
     input: ListDependenciesInput
     output: ListDependenciesOutput
-    errors: [ResourceNotFoundException, DependenciesNotFoundException, ResourceNotReadable]
+    errors: [
+        ResourceNotFoundException
+        DependenciesNotFoundException
+        ResourceNotReadable
+        InternalServerErrorException
+    ]
 }
 
 @input
@@ -33,7 +38,11 @@ structure ListDependenciesOutput {
 operation HasDependencies {
     input: HasDependenciesInput
     output: HasDependenciesOutput
-    errors: [ResourceNotFoundException, ResourceNotReadable]
+    errors: [
+        ResourceNotFoundException
+        ResourceNotReadable
+        InternalServerErrorException
+    ]
 }
 
 @input
