@@ -19,6 +19,7 @@ operation ListDependencies {
         DependenciesNotFoundException
         ResourceNotReadable
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -44,6 +45,7 @@ operation HasDependencies {
         ResourceNotFoundException
         ResourceNotReadable
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 

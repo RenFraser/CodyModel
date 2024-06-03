@@ -20,6 +20,7 @@ operation GetDiff {
     errors: [
         ResourceNotFoundException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -44,6 +45,7 @@ operation GetStatus {
     errors: [
         ResourceNotFoundException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -68,6 +70,7 @@ operation CommitChanges {
         ResourceNotFoundException
         NothingToCommitException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -91,6 +94,7 @@ operation GetLog {
     errors: [
         ResourceNotFoundException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 

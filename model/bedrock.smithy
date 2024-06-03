@@ -18,6 +18,7 @@ operation SendText {
         InputLimitExceededException
         UnexpectedMessageTypeError
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -42,6 +43,7 @@ operation SendImage {
         InputLimitExceededException
         UnexpectedMessageTypeError
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -66,6 +68,7 @@ operation SendDocument {
         InputLimitExceededException
         UnexpectedMessageTypeError
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 

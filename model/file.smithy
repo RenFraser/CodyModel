@@ -21,6 +21,7 @@ operation CreateFile {
         LocationNotWritable
         ContainingLocationNotFoundException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -41,6 +42,13 @@ structure CreateFileOutput {}
 operation ReadFile {
     input: ReadFileInput
     output: ReadFileOutput
+    errors: [
+        ResourceNotFoundException
+        ResourceNotReadable
+        BadRequestException
+        NotImplementedException
+        InternalServerErrorException
+    ]
 }
 
 @input
@@ -66,6 +74,7 @@ operation UpdateFile {
         ResourceNotFoundException
         LocationNotWritable
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -90,6 +99,7 @@ operation DeleteFile {
         ConflictException
         ResourceNotFoundException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 

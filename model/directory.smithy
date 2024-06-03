@@ -19,6 +19,7 @@ operation ReadDirectory {
         ResourceNotFoundException
         ResourceNotReadable
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -44,6 +45,7 @@ operation CreateDirectory {
         LocationNotWritable
         ContainingLocationNotFoundException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 

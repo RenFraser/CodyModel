@@ -19,6 +19,7 @@ operation RequestSecurityReview {
     errors: [
         BadRequestException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -29,6 +30,7 @@ operation RequestDesignReview {
     errors: [
         BadRequestException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -39,6 +41,7 @@ operation RequestPerformanceReview {
     errors: [
         BadRequestException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -49,6 +52,7 @@ operation RequestOperationsReview {
     errors: [
         BadRequestException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -59,6 +63,7 @@ operation RequestTestReview {
     errors: [
         BadRequestException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 

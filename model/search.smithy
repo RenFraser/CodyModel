@@ -16,6 +16,7 @@ operation SearchFileNames {
     errors: [
         BadRequestException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
@@ -37,6 +38,7 @@ operation SearchFileContent {
     errors: [
         BadRequestException
         InternalServerErrorException
+        NotImplementedException
     ]
 }
 
