@@ -9,6 +9,7 @@ service Cody {
         Dependency
         Directory
         File
+        Repository
         Review
         Search
     ]

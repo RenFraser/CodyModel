@@ -17,6 +17,13 @@ structure UnexpectedMessageTypeError {
 }
 
 @error("client")
+@httpError(400)
+structure NothingToCommitException {
+    @required
+    message: String
+}
+
+@error("client")
 @httpError(404)
 structure ResourceNotFoundException {
     @required
