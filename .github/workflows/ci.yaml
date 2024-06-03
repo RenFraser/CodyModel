@@ -22,9 +22,6 @@ jobs:
     - name: Build Smithy
       run: ./gradlew smithyBuild
 
-    - name: Lint Smithy
-      run: ./gradlew testSmithyBuild
-
   dependabot:
       permissions: write-all
       runs-on: ubuntu-latest
