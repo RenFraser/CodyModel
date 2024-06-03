@@ -9,6 +9,7 @@ resource Dependency {
     ]
 }
 
+@readonly
 @http(method: "GET", uri: "/api/dependencies/list")
 operation ListDependencies {
     input: ListDependenciesInput
@@ -34,6 +35,7 @@ structure ListDependenciesOutput {
     dependencies: PathsList
 }
 
+@readonly
 @http(method: "GET", uri: "/api/dependencies")
 operation HasDependencies {
     input: HasDependenciesInput

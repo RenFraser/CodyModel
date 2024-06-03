@@ -35,7 +35,6 @@ structure ReadDirectoryOutput {
     paths: PathsList
 }
 
-@readonly
 @http(method: "POST", uri: "/api/directory")
 operation CreateDirectory {
     input: CreateDirectoryInput
