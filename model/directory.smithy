@@ -33,7 +33,7 @@ structure ReadDirectoryInput {
 @output
 structure ReadDirectoryOutput {
     @required
-    paths: PathsList
+    paths: PathsList = []
 }
 
 @http(method: "POST", uri: "/api/directory")

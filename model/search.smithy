@@ -28,7 +28,7 @@ structure SearchFileNamesInput {
 
 structure SearchFileNamesOutput {
     @required
-    results: PathsList
+    results: PathsList = []
 }
 
 @http(method: "POST", uri: "/api/search/content")
@@ -50,5 +50,5 @@ structure SearchFileContentInput {
 
 structure SearchFileContentOutput {
     @required
-    results: PathsList
+    results: PathsList = []
 }

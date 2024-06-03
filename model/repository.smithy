@@ -111,11 +111,30 @@ structure GetLogInput {
 @output
 structure GetLogOutput {
     @required
-    log: RepositoryLog
+    log: RepositoryLog = []
 }
 
-string CommitDetails
+structure CommitDetails {
+    @required
+    author: String
+
+    @required
+    email: Email
+
+    @required
+    date: Timestamp
+
+    @required
+    shortMessage: String
+
+    messageBody: String
+
+    diff: String
+}
 
 list RepositoryLog {
     member: CommitDetails
 }
+
+@pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$")
+string Email

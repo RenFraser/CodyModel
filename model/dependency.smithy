@@ -33,7 +33,7 @@ structure ListDependenciesInput {
 @output
 structure ListDependenciesOutput {
     @required
-    dependencies: PathsList
+    dependencies: PathsList = []
 }
 
 @readonly
