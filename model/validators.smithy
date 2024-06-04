@@ -29,10 +29,9 @@ metadata validators = [
     {
         name: "InputOutputStructureReuse"
     }
-    // TODO: paginated trait
-    //    {
-    //        name: "MissingPaginatedTrait"
-    //    }
+    {
+        name: "MissingPaginatedTrait"
+    }
     {
         name: "ShouldHaveUsedTimestamp"
     }

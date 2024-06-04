@@ -12,6 +12,7 @@ resource Directory {
 
 @readonly
 @http(method: "GET", uri: "/api/directory")
+@paginated
 operation GetDirectory {
     input: GetDirectoryInput
     output: GetDirectoryOutput
@@ -28,10 +29,18 @@ structure GetDirectoryInput {
     @required
     @httpHeader("X-File-Path")
     path: String
+
+    @httpHeader("X-Pagination-Token")
+    nextToken: String
+
+    @httpHeader("X-Max-Results")
+    maxResults: Integer
 }
 
 @output
 structure GetDirectoryOutput {
+    nextToken: String
+
     @required
     paths: PathsList = []
 }

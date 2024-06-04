@@ -8,7 +8,7 @@ resource Repository {
         GetDiff
         GetStatus
         CreateCommit
-        GetLog
+        ListCommits
     ]
 }
 
@@ -87,10 +87,11 @@ structure CreateCommitInput {
 structure CreateCommitOutput {}
 
 @readonly
-@http(method: "GET", uri: "/api/repository/log")
-operation GetLog {
-    input: GetLogInput
-    output: GetLogOutput
+@paginated
+@http(method: "GET", uri: "/api/repository/commit/list")
+operation ListCommits {
+    input: ListCommitsInput
+    output: ListCommitsOutput
     errors: [
         ResourceNotFoundException
         InternalServerErrorException
@@ -99,19 +100,27 @@ operation GetLog {
 }
 
 @input
-structure GetLogInput {
+structure ListCommitsInput {
     @required
     @httpHeader("X-Repository-Path")
     path: String
 
     @httpQuery("limit")
     limit: Integer
+
+    @httpHeader("X-Pagination-Token")
+    nextToken: String
+
+    @httpHeader("X-Max-Results")
+    maxResults: Integer
 }
 
 @output
-structure GetLogOutput {
+structure ListCommitsOutput {
     @required
     log: RepositoryLog = []
+
+    nextToken: String
 }
 
 structure CommitDetails {
