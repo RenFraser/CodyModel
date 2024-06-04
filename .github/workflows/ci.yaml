@@ -19,8 +19,8 @@ jobs:
         java-version: '17'
         distribution: 'corretto'
 
-    - name: Build Smithy
-      run: ./gradlew smithyBuild
+    - name: Build
+      run: ./gradlew build
 
   dependabot:
       permissions: write-all
