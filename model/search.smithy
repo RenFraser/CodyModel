@@ -20,12 +20,14 @@ operation SearchFileNames {
     ]
 }
 
+@input
 structure SearchFileNamesInput {
     @required
     @httpPayload
     query: String
 }
 
+@output
 structure SearchFileNamesOutput {
     @required
     results: PathsList = []
@@ -42,12 +44,14 @@ operation SearchFileContent {
     ]
 }
 
+@input
 structure SearchFileContentInput {
     @required
     @httpPayload
     query: String
 }
 
+@output
 structure SearchFileContentOutput {
     @required
     results: PathsList = []

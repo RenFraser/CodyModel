@@ -6,15 +6,15 @@ resource Directory {
     identifiers: { path: String }
     operations: [
         CreateDirectory
-        ReadDirectory
+        GetDirectory
     ]
 }
 
 @readonly
 @http(method: "GET", uri: "/api/directory")
-operation ReadDirectory {
-    input: ReadDirectoryInput
-    output: ReadDirectoryOutput
+operation GetDirectory {
+    input: GetDirectoryInput
+    output: GetDirectoryOutput
     errors: [
         ResourceNotFoundException
         ResourceNotReadable
@@ -24,14 +24,14 @@ operation ReadDirectory {
 }
 
 @input
-structure ReadDirectoryInput {
+structure GetDirectoryInput {
     @required
     @httpHeader("X-File-Path")
     path: String
 }
 
 @output
-structure ReadDirectoryOutput {
+structure GetDirectoryOutput {
     @required
     paths: PathsList = []
 }

@@ -4,18 +4,18 @@ namespace com.cody.model
 
 resource Review {
     operations: [
-        RequestSecurityReview
-        RequestDesignReview
-        RequestPerformanceReview
-        RequestOperationsReview
-        RequestTestReview
+        CreateSecurityReview
+        CreateDesignReview
+        CreatePerformanceReview
+        CreateOperationsReview
+        CreateTestReview
     ]
 }
 
 @http(method: "POST", uri: "/api/review/security")
-operation RequestSecurityReview {
-    input: RequestSecurityReviewInput
-    output: RequestSecurityReviewOutput
+operation CreateSecurityReview {
+    input: CreateSecurityReviewInput
+    output: CreateSecurityReviewOutput
     errors: [
         BadRequestException
         InternalServerErrorException
@@ -24,9 +24,9 @@ operation RequestSecurityReview {
 }
 
 @http(method: "POST", uri: "/api/review/design")
-operation RequestDesignReview {
-    input: RequestDesignReviewInput
-    output: RequestDesignReviewOutput
+operation CreateDesignReview {
+    input: CreateDesignReviewInput
+    output: CreateDesignReviewOutput
     errors: [
         BadRequestException
         InternalServerErrorException
@@ -35,9 +35,9 @@ operation RequestDesignReview {
 }
 
 @http(method: "POST", uri: "/api/review/performance")
-operation RequestPerformanceReview {
-    input: RequestPerformanceReviewInput
-    output: RequestPerformanceReviewOutput
+operation CreatePerformanceReview {
+    input: CreatePerformanceReviewInput
+    output: CreatePerformanceReviewOutput
     errors: [
         BadRequestException
         InternalServerErrorException
@@ -46,9 +46,9 @@ operation RequestPerformanceReview {
 }
 
 @http(method: "POST", uri: "/api/review/operations")
-operation RequestOperationsReview {
-    input: RequestOperationsReviewInput
-    output: RequestOperationsReviewOutput
+operation CreateOperationsReview {
+    input: CreateOperationsReviewInput
+    output: CreateOperationsReviewOutput
     errors: [
         BadRequestException
         InternalServerErrorException
@@ -57,9 +57,9 @@ operation RequestOperationsReview {
 }
 
 @http(method: "POST", uri: "/api/review/tests")
-operation RequestTestReview {
-    input: RequestTestReviewInput
-    output: RequestTestReviewOutput
+operation CreateTestReview {
+    input: CreateTestReviewInput
+    output: CreateTestReviewOutput
     errors: [
         BadRequestException
         InternalServerErrorException
@@ -68,61 +68,61 @@ operation RequestTestReview {
 }
 
 @input
-structure RequestSecurityReviewInput {
+structure CreateSecurityReviewInput {
     @required
     content: String
 }
 
 @output
-structure RequestSecurityReviewOutput {
+structure CreateSecurityReviewOutput {
     @required
     message: String
 }
 
 @input
-structure RequestDesignReviewInput {
+structure CreateDesignReviewInput {
     @required
     content: String
 }
 
 @output
-structure RequestDesignReviewOutput {
+structure CreateDesignReviewOutput {
     @required
     message: String
 }
 
 @input
-structure RequestPerformanceReviewInput {
+structure CreatePerformanceReviewInput {
     @required
     content: String
 }
 
 @output
-structure RequestPerformanceReviewOutput {
+structure CreatePerformanceReviewOutput {
     @required
     message: String
 }
 
 @input
-structure RequestOperationsReviewInput {
+structure CreateOperationsReviewInput {
     @required
     content: String
 }
 
 @output
-structure RequestOperationsReviewOutput {
+structure CreateOperationsReviewOutput {
     @required
     message: String
 }
 
 @input
-structure RequestTestReviewInput {
+structure CreateTestReviewInput {
     @required
     content: String
 }
 
 @output
-structure RequestTestReviewOutput {
+structure CreateTestReviewOutput {
     @required
     message: String
 }

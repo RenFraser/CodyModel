@@ -7,7 +7,7 @@ resource Repository {
     operations: [
         GetDiff
         GetStatus
-        CommitChanges
+        CreateCommit
         GetLog
     ]
 }
@@ -63,9 +63,9 @@ structure GetStatusOutput {
 }
 
 @http(method: "POST", uri: "/api/repository/commit")
-operation CommitChanges {
-    input: CommitChangesInput
-    output: CommitChangesOutput
+operation CreateCommit {
+    input: CreateCommitInput
+    output: CreateCommitOutput
     errors: [
         ResourceNotFoundException
         NothingToCommitException
@@ -75,7 +75,7 @@ operation CommitChanges {
 }
 
 @input
-structure CommitChangesInput {
+structure CreateCommitInput {
     @required
     path: String
 
@@ -84,7 +84,7 @@ structure CommitChangesInput {
 }
 
 @output
-structure CommitChangesOutput {}
+structure CreateCommitOutput {}
 
 @readonly
 @http(method: "GET", uri: "/api/repository/log")
@@ -136,5 +136,6 @@ list RepositoryLog {
     member: CommitDetails
 }
 
+@sensitive
 @pattern("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$")
 string Email

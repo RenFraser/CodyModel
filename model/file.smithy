@@ -6,7 +6,7 @@ resource File {
     identifiers: { path: String }
     operations: [
         CreateFile
-        ReadFile
+        GetFile
         UpdateFile
         DeleteFile
     ]
@@ -39,9 +39,9 @@ structure CreateFileOutput {}
 
 @readonly
 @http(method: "GET", uri: "/api/file")
-operation ReadFile {
-    input: ReadFileInput
-    output: ReadFileOutput
+operation GetFile {
+    input: GetFileInput
+    output: GetFileOutput
     errors: [
         ResourceNotFoundException
         ResourceNotReadable
@@ -52,14 +52,14 @@ operation ReadFile {
 }
 
 @input
-structure ReadFileInput {
+structure GetFileInput {
     @required
     @httpHeader("X-File-Path")
     path: String
 }
 
 @output
-structure ReadFileOutput {
+structure GetFileOutput {
     @required
     content: String
 }

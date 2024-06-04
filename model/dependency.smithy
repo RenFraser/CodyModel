@@ -5,7 +5,6 @@ namespace com.cody.model
 resource Dependency {
     operations: [
         ListDependencies
-        HasDependencies
     ]
 }
 
@@ -34,30 +33,4 @@ structure ListDependenciesInput {
 structure ListDependenciesOutput {
     @required
     dependencies: PathsList = []
-}
-
-@readonly
-@http(method: "GET", uri: "/api/dependencies")
-operation HasDependencies {
-    input: HasDependenciesInput
-    output: HasDependenciesOutput
-    errors: [
-        ResourceNotFoundException
-        ResourceNotReadable
-        InternalServerErrorException
-        NotImplementedException
-    ]
-}
-
-@input
-structure HasDependenciesInput {
-    @required
-    @httpHeader("X-File-Path")
-    path: String
-}
-
-@output
-structure HasDependenciesOutput {
-    @required
-    dependencies: Boolean
 }
