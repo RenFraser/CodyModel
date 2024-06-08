@@ -3,12 +3,13 @@ name: CI/CD
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      packages: write
       contents: read
     steps:
       - uses: actions/checkout@v3
@@ -21,6 +22,24 @@ jobs:
 
       - name: Build
         run: ./gradlew build
+
+  typescript-client:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Build
+        run: ./gradlew smithyBuild
 
       - uses: actions/setup-node@v4
         with:
@@ -41,6 +60,29 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+  typescript-server:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+
+      - name: Build
+        run: ./gradlew smithyBuild
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+
       - name: Install Server Dependencies
         run: npm install
         working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
@@ -56,18 +98,17 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   dependabot:
-      permissions: write-all
-      runs-on: ubuntu-latest
-      if: github.actor == 'dependabot[bot]'
-      needs: [build]
-      steps:
-        - name: Dependabot metadata
-          id: metadata
-          uses: dependabot/fetch-metadata@v2
-          with:
-            github-token: "${{ secrets.GITHUB_TOKEN }}"
-        - name: Enable auto-merge for Dependabot PRs
-          run: gh pr merge --auto --merge "$PR_URL"
-          env:
-            PR_URL: ${{github.event.pull_request.html_url}}
-            GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+    needs: [build]
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
