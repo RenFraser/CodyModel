@@ -7,18 +7,53 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      packages: write
+      contents: read
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up JDK
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'corretto'
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'corretto'
 
-    - name: Build
-      run: ./gradlew build
+      - name: Build
+        run: ./gradlew build
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          registry-url: https://npm.pkg.github.com/
+
+      - name: Install Client Dependencies
+        run: npm install
+        working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
+
+      - name: Build Client
+        run: npm run build
+        working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
+
+      - name: Publish Client
+        run: npm publish
+        working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Install Server Dependencies
+        run: npm install
+        working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
+
+      - name: Build Server
+        run: npm run build
+        working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
+
+      - name: Publish Server
+        run: npm publish
+        working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
   dependabot:
       permissions: write-all
