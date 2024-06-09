@@ -1,7 +1,7 @@
-name: CI
+name: PR
 
 on:
-  push:
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -53,12 +53,6 @@ jobs:
         run: npm run build
         working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
 
-      - name: Publish Client
-        run: npm publish
-        working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
   typescript-server:
     runs-on: ubuntu-latest
     permissions:
@@ -91,8 +85,18 @@ jobs:
         run: npm run build
         working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
 
-      - name: Publish Server
-        run: npm publish
-        working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
+  dependabot:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+    needs: [build]
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "$PR_URL"
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
