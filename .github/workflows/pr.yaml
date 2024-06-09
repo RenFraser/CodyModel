@@ -27,15 +27,11 @@ jobs:
       packages: write
       contents: read
     needs: [build]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4
+      - uses: actions/download-artifact@v4
         with:
-          java-version: '17'
-          distribution: 'corretto'
+          name: build
+          path: build
 
       - name: Build
         run: ./gradlew smithyBuild
@@ -59,18 +55,11 @@ jobs:
       packages: write
       contents: read
     needs: [build]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4
+      - uses: actions/download-artifact@v4
         with:
-          java-version: '17'
-          distribution: 'corretto'
-
-      - name: Build
-        run: ./gradlew smithyBuild
+          name: build
+          path: build
 
       - uses: actions/setup-node@v4
         with:
@@ -87,7 +76,7 @@ jobs:
 
   dependabot:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+    if: github.actor == 'dependabot[bot]'
     needs: [build]
     steps:
       - name: Dependabot metadata
