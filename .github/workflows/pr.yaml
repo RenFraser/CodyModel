@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Fetch Tags
+        run: git fetch --tags
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
