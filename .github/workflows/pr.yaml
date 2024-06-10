@@ -102,6 +102,7 @@ jobs:
   automerge:
     permissions:
       contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     needs: [build, typescript-server, typescript-client]
