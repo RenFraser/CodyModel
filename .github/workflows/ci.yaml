@@ -21,6 +21,24 @@ jobs:
       - name: Fetch Tags
         run: git fetch --tags
 
+      - name: Create temp version file
+        run: "git tag --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
+
+      - name: Create Changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        id: changelog
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          git-user-name: "github-actions[bot]"
+          git-user-email: "github-actions[bot]@users.noreply.github.com"
+          git-branch: main
+          skip-git-pull: true
+          output-file: false
+          version-file: version.json
+          preset: conventionalcommits
+          skip-on-empty: false
+          git-push: false
+
       - name: Build
         run: ./gradlew build
 
@@ -91,3 +109,35 @@ jobs:
         working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: [typescript-client, typescript-server]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Tags
+        run: git fetch --tags
+
+      - name: Create temp version file
+        run: "git tag --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
+
+      - name: Create Changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        id: changelog
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          git-user-name: "github-actions[bot]"
+          git-user-email: "github-actions[bot]@users.noreply.github.com"
+          git-branch: main
+          skip-git-pull: true
+          output-file: false
+          version-file: version.json
+          preset: conventionalcommits
+          skip-on-empty: false
+          git-push: false
+
+      - name: Push Tags
+        run: git push origin --tags
