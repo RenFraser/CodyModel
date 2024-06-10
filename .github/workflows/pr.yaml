@@ -38,6 +38,13 @@ jobs:
       - name: Run Build
         run: ./gradlew build
 
+      - name: Upload Gradle Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build
+          if-no-files-found: error
+
   typescript-client:
     runs-on: ubuntu-latest
     permissions:
