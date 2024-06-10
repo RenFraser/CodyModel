@@ -104,7 +104,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
-    needs: [build]
+    needs: [build, typescript-server, typescript-client]
     steps:
       - name: Fetch Dependabot Metadata
         id: metadata
