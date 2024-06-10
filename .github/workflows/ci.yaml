@@ -8,17 +8,22 @@ jobs:
   commitlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: wagoid/commitlint-github-action@v6
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Run commitlint
+        uses: wagoid/commitlint-github-action@v6
+
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
     needs: [commitlint]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           java-version: '17'
@@ -27,12 +32,11 @@ jobs:
       - name: Fetch Tags
         run: git fetch --tags
 
-      - name: Create temp version file
+      - name: Create Temp Version File
         run: "git tag --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
 
       - name: Create Changelog
         uses: TriPSs/conventional-changelog-action@v5
-        id: changelog
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           git-user-name: "github-actions[bot]"
@@ -45,10 +49,11 @@ jobs:
           skip-on-empty: false
           git-push: false
 
-      - name: Build
+      - name: Run Build
         run: ./gradlew build
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload Gradle Build Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: build
@@ -61,25 +66,27 @@ jobs:
       contents: read
     needs: [build]
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download Gradle Build Artifact
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: build
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
 
-      - name: Install Client Dependencies
+      - name: Install TypeScript Client Dependencies
         run: npm install
         working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
 
-      - name: Build Client
+      - name: Build TypeScript Client
         run: npm run build
         working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
 
-      - name: Publish Client
+      - name: Publish TypeScript Client
         run: npm publish
         working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
         env:
@@ -92,25 +99,27 @@ jobs:
       contents: read
     needs: [build]
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download Gradle Build Artifact
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: build
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
 
-      - name: Install Server Dependencies
+      - name: Install TypeScript Server Dependencies
         run: npm install
         working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
 
-      - name: Build Server
+      - name: Build TypeScript Server
         run: npm run build
         working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
 
-      - name: Publish Server
+      - name: Publish TypeScript Server
         run: npm publish
         working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
         env:
@@ -122,17 +131,17 @@ jobs:
       contents: write
     needs: [typescript-client, typescript-server]
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v4
 
       - name: Fetch Tags
         run: git fetch --tags
 
-      - name: Create temp version file
+      - name: Create Temp Version File
         run: "git tag --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
 
       - name: Create Changelog
         uses: TriPSs/conventional-changelog-action@v5
-        id: changelog
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           git-user-name: "github-actions[bot]"

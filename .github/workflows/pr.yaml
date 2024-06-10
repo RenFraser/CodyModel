@@ -11,8 +11,11 @@ jobs:
       pull-requests: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: wagoid/commitlint-github-action@v6
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Run commitlint
+        uses: wagoid/commitlint-github-action@v6
 
   build:
     runs-on: ubuntu-latest
@@ -20,18 +23,19 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v4
 
       - name: Fetch Tags
         run: git fetch --tags
 
-      - name: Set up JDK
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'corretto'
 
-      - name: Build
+      - name: Run Build
         run: ./gradlew build
 
   typescript-client:
@@ -41,7 +45,8 @@ jobs:
       contents: read
     needs: [build]
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download Gradle Build Artifact
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: build
@@ -49,16 +54,17 @@ jobs:
       - name: Build
         run: ./gradlew smithyBuild
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
 
-      - name: Install Client Dependencies
+      - name: Install TypeScript Client Dependencies
         run: npm install
         working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
 
-      - name: Build Client
+      - name: Build TypeScript Client
         run: npm run build
         working-directory: build/smithyprojections/CodyModel/source/typescript-client-codegen/
 
@@ -69,35 +75,38 @@ jobs:
       contents: read
     needs: [build]
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download Gradle Build Artifact
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: build
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
 
-      - name: Install Server Dependencies
+      - name: Install TypeScript Server Dependencies
         run: npm install
         working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
 
-      - name: Build Server
+      - name: Build TypeScript Server
         run: npm run build
         working-directory: build/smithyprojections/CodyModel/source/typescript-server-codegen/
 
-  dependabot:
+  automerge:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
     needs: [build]
     steps:
-      - name: Dependabot metadata
+      - name: Fetch Dependabot Metadata
         id: metadata
         uses: dependabot/fetch-metadata@v2
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
-      - name: Enable auto-merge for Dependabot PRs
+
+      - name: Merge Dependabot PR
         run: gh pr merge --auto --merge "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
