@@ -23,7 +23,7 @@ operation SearchFileNames with [StandardExceptions] {
 
     output := {
         @required
-        results: PathsList = []
+        results: Paths = []
 
         nextToken: String
     }
@@ -46,7 +46,7 @@ operation SearchFileContent with [StandardExceptions] {
 
     output := {
         @required
-        results: PathsList = []
+        results: Paths = []
 
         nextToken: String
     }

@@ -27,7 +27,7 @@ operation ListDependencies with [StandardExceptions] {
 
     output := {
         @required
-        dependencies: PathsList = []
+        dependencies: Paths = []
 
         nextToken: String
     }

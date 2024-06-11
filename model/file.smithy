@@ -2,8 +2,14 @@ $version: "2"
 
 namespace com.cody.model
 
+string Path
+
+list Paths {
+    member: Path
+}
+
 resource File {
-    identifiers: { path: String }
+    identifiers: { path: Path }
     properties: { content: String }
     put: PutFile
     read: GetFile
@@ -58,4 +64,32 @@ operation DeleteFile with [StandardExceptions] {
     }
 
     output := {}
+}
+
+@readonly
+@http(method: "GET", uri: "/api/file/list")
+@paginated
+operation ListFiles with [StandardExceptions] {
+    input := for File {
+        @required
+        @httpHeader("X-File-Path")
+        $path
+
+        @httpHeader("X-Pagination-Token")
+        nextToken: String
+
+        @httpHeader("X-Max-Results")
+        maxResults: Integer
+    }
+
+    output := {
+        nextToken: String
+
+        @required
+        paths: Paths = []
+    }
+
+    errors: [
+        ResourceNotReadable
+    ]
 }

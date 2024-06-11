@@ -8,35 +8,6 @@ resource Directory {
     identifiers: { path: String }
     operations: [
         CreateDirectory
-        GetDirectory
-    ]
-}
-
-@readonly
-@http(method: "GET", uri: "/api/directory")
-@paginated
-operation GetDirectory with [StandardExceptions] {
-    input := for Directory {
-        @required
-        @httpHeader("X-File-Path")
-        $path
-
-        @httpHeader("X-Pagination-Token")
-        nextToken: String
-
-        @httpHeader("X-Max-Results")
-        maxResults: Integer
-    }
-
-    output := {
-        nextToken: String
-
-        @required
-        paths: PathsList = []
-    }
-
-    errors: [
-        ResourceNotReadable
     ]
 }
 
