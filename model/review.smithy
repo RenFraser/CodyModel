@@ -3,6 +3,7 @@ $version: "2"
 namespace com.cody.model
 
 resource Review {
+    properties: { content: String, message: String }
     operations: [
         CreateSecurityReview
         CreateDesignReview
@@ -14,65 +15,65 @@ resource Review {
 
 @http(method: "POST", uri: "/api/review/security")
 operation CreateSecurityReview with [StandardExceptions] {
-    input := {
+    input := for Review {
         @required
-        content: String
+        $content
     }
 
-    output := {
+    output := for Review {
         @required
-        message: String
+        $message
     }
 }
 
 @http(method: "POST", uri: "/api/review/design")
 operation CreateDesignReview with [StandardExceptions] {
-    input := {
+    input := for Review {
         @required
-        content: String
+        $content
     }
 
-    output := {
+    output := for Review {
         @required
-        message: String
+        $message
     }
 }
 
 @http(method: "POST", uri: "/api/review/performance")
 operation CreatePerformanceReview with [StandardExceptions] {
-    input := {
+    input := for Review {
         @required
-        content: String
+        $content
     }
 
-    output := {
+    output := for Review {
         @required
-        message: String
+        $message
     }
 }
 
 @http(method: "POST", uri: "/api/review/operations")
 operation CreateOperationsReview with [StandardExceptions] {
-    input := {
+    input := for Review {
         @required
-        content: String
+        $content
     }
 
-    output := {
+    output := for Review {
         @required
-        message: String
+        $message
     }
 }
 
 @http(method: "POST", uri: "/api/review/tests")
 operation CreateTestReview with [StandardExceptions] {
-    input := {
+    input := for Review {
         @required
-        content: String
+        $content
     }
 
-    output := {
+    output := for Review {
         @required
-        message: String
+        $message
     }
 }
