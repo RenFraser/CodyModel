@@ -11,63 +11,43 @@ resource Search {
 
 @http(method: "POST", uri: "/api/search/names")
 @paginated
-operation SearchFileNames {
-    input: SearchFileNamesInput
-    output: SearchFileNamesOutput
-    errors: [
-        BadRequestException
-        InternalServerErrorException
-        NotImplementedException
-    ]
-}
+operation SearchFileNames with [StandardExceptions] {
+    input := {
+        @required
+        query: String
 
-@input
-structure SearchFileNamesInput {
-    @required
-    query: String
+        nextToken: String
 
-    nextToken: String
+        maxResults: Integer
+    }
 
-    maxResults: Integer
-}
+    output := {
+        @required
+        results: PathsList = []
 
-@output
-structure SearchFileNamesOutput {
-    @required
-    results: PathsList = []
-
-    nextToken: String
+        nextToken: String
+    }
 }
 
 @http(method: "POST", uri: "/api/search/content")
 @paginated
-operation SearchFileContent {
-    input: SearchFileContentInput
-    output: SearchFileContentOutput
-    errors: [
-        BadRequestException
-        InternalServerErrorException
-        NotImplementedException
-    ]
-}
+operation SearchFileContent with [StandardExceptions] {
+    input := {
+        @required
+        @httpPayload
+        query: String
 
-@input
-structure SearchFileContentInput {
-    @required
-    @httpPayload
-    query: String
+        @httpHeader("X-Pagination-Token")
+        nextToken: String
 
-    @httpHeader("X-Pagination-Token")
-    nextToken: String
+        @httpHeader("X-Max-Results")
+        maxResults: Integer
+    }
 
-    @httpHeader("X-Max-Results")
-    maxResults: Integer
-}
+    output := {
+        @required
+        results: PathsList = []
 
-@output
-structure SearchFileContentOutput {
-    @required
-    results: PathsList = []
-
-    nextToken: String
+        nextToken: String
+    }
 }

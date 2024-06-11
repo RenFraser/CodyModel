@@ -14,113 +14,76 @@ resource Repository {
 
 @readonly
 @http(method: "GET", uri: "/api/repository/diff")
-operation GetDiff {
-    input: GetDiffInput
-    output: GetDiffOutput
-    errors: [
-        ResourceNotFoundException
-        InternalServerErrorException
-        NotImplementedException
-    ]
-}
+operation GetDiff with [StandardExceptions] {
+    input := for Repository {
+        @required
+        @httpHeader("X-Repository-Path")
+        $path
+    }
 
-@input
-structure GetDiffInput {
-    @required
-    @httpHeader("X-Repository-Path")
-    path: String
-}
-
-@output
-structure GetDiffOutput {
-    @required
-    diff: String
+    output := {
+        @required
+        diff: String
+    }
 }
 
 @readonly
 @http(method: "GET", uri: "/api/repository/status")
-operation GetStatus {
-    input: GetStatusInput
-    output: GetStatusOutput
-    errors: [
-        ResourceNotFoundException
-        InternalServerErrorException
-        NotImplementedException
-    ]
-}
+operation GetStatus with [StandardExceptions] {
+    input := for Repository {
+        @required
+        @httpHeader("X-Repository-Path")
+        $path
+    }
 
-@input
-structure GetStatusInput {
-    @required
-    @httpHeader("X-Repository-Path")
-    path: String
-}
-
-@output
-structure GetStatusOutput {
-    @required
-    status: String
+    output := {
+        @required
+        status: String
+    }
 }
 
 @http(method: "POST", uri: "/api/repository/commit")
-operation CreateCommit {
-    input: CreateCommitInput
-    output: CreateCommitOutput
+operation CreateCommit with [StandardExceptions] {
+    input := {
+        @required
+        path: String
+
+        @required
+        message: String
+    }
+
+    output := {}
+
     errors: [
-        ResourceNotFoundException
         NothingToCommitException
-        InternalServerErrorException
-        NotImplementedException
     ]
 }
-
-@input
-structure CreateCommitInput {
-    @required
-    path: String
-
-    @required
-    message: String
-}
-
-@output
-structure CreateCommitOutput {}
 
 @readonly
 @paginated
 @http(method: "GET", uri: "/api/repository/commit/list")
-operation ListCommits {
-    input: ListCommitsInput
-    output: ListCommitsOutput
-    errors: [
-        ResourceNotFoundException
-        InternalServerErrorException
-        NotImplementedException
-    ]
-}
+operation ListCommits with [StandardExceptions] {
+    input := {
+        @required
+        @httpHeader("X-Repository-Path")
+        path: String
 
-@input
-structure ListCommitsInput {
-    @required
-    @httpHeader("X-Repository-Path")
-    path: String
+        @httpQuery("limit")
+        limit: Integer
 
-    @httpQuery("limit")
-    limit: Integer
+        @httpHeader("X-Pagination-Token")
+        nextToken: String
 
-    @httpHeader("X-Pagination-Token")
-    nextToken: String
+        @httpHeader("X-Max-Results")
+        maxResults: Integer
+    }
 
-    @httpHeader("X-Max-Results")
-    maxResults: Integer
-}
+    output := {
+        @required
+        log: RepositoryLog = []
 
-@output
-structure ListCommitsOutput {
-    @required
-    log: RepositoryLog = []
-
-    nextToken: String
+        nextToken: String
+    }
 }
 
 structure CommitDetails {
