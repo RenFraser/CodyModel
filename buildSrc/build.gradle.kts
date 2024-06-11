@@ -12,7 +12,7 @@ repositories {
 dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.1")
-    testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:2.0.0")
 }
 
 tasks {
