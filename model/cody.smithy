@@ -14,7 +14,6 @@ service Cody {
         File
         Repository
         Review
-        Search
     ]
     errors: [
         ValidationException

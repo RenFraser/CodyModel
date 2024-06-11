@@ -14,6 +14,10 @@ resource File {
     put: PutFile
     read: GetFile
     delete: DeleteFile
+    operations: [
+        SearchByFileName
+        SearchByFileContent
+    ]
 }
 
 @idempotent
@@ -29,10 +33,7 @@ operation PutFile with [StandardExceptions] {
 
     output := {}
 
-    errors: [
-        LocationNotWritable
-        ContainingLocationNotFoundException
-    ]
+    errors: [ LocationNotWritable ContainingLocationNotFoundException ]
 }
 
 @readonly
@@ -89,7 +90,61 @@ operation ListFiles with [StandardExceptions] {
         paths: Paths = []
     }
 
-    errors: [
-        ResourceNotReadable
-    ]
+    errors: [ ResourceNotReadable ]
+}
+
+@http(method: "POST", uri: "/api/file/search/name")
+@paginated
+operation SearchByFileName with [StandardExceptions] {
+    input := for File {
+        @required
+        @httpHeader("X-File-Path")
+        $path
+
+        @notProperty
+        nextToken: String
+
+        @notProperty
+        maxResults: Integer
+    }
+
+    output := {
+        @required
+        @notProperty
+        results: Paths = []
+
+        @notProperty
+        nextToken: String
+    }
+}
+
+@http(method: "POST", uri: "/api/file/search/content")
+@paginated
+operation SearchByFileContent with [StandardExceptions] {
+    input := for File {
+        @required
+        @httpHeader("X-File-Path")
+        $path
+
+        @required
+        @httpPayload
+        $content
+
+        @httpHeader("X-Pagination-Token")
+        @notProperty
+        nextToken: String
+
+        @httpHeader("X-Max-Results")
+        @notProperty
+        maxResults: Integer
+    }
+
+    output := {
+        @required
+        @notProperty
+        results: Paths = []
+
+        @notProperty
+        nextToken: String
+    }
 }
