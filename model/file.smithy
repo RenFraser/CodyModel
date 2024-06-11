@@ -33,7 +33,10 @@ operation PutFile with [StandardExceptions] {
 
     output := {}
 
-    errors: [ LocationNotWritable ContainingLocationNotFoundException ]
+    errors: [
+        LocationNotWritable
+        ContainingLocationNotFoundException
+    ]
 }
 
 @readonly
@@ -90,7 +93,9 @@ operation ListFiles with [StandardExceptions] {
         paths: Paths = []
     }
 
-    errors: [ ResourceNotReadable ]
+    errors: [
+        ResourceNotReadable
+    ]
 }
 
 @http(method: "POST", uri: "/api/file/search/name")
