@@ -39,3 +39,11 @@ metadata validators = [
         name: "MissingClientOptionalTrait"
     }
 ]
+
+metadata severityOverrides = [
+    {
+        namespace: "*"
+        id: "HttpMethodSemantics"
+        severity: "DANGER"
+    }
+]
