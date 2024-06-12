@@ -2,17 +2,14 @@ $version: "2"
 
 namespace com.cody.model
 
-// TODO: use the list operation in Files resource instead of dir
-// TODO: bind to lifecycle operations: https://smithy.io/2.0/spec/service-types.html#resource-lifecycle-operations
 resource Directory {
     identifiers: { path: String }
-    operations: [
-        CreateDirectory
-    ]
+    put: PutDirectory
 }
 
+@idempotent
 @http(method: "POST", uri: "/api/directory")
-operation CreateDirectory {
+operation PutDirectory {
     input := for Directory {
         @required
         @httpHeader("X-Directory-Path")

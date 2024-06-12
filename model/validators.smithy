@@ -20,7 +20,7 @@ metadata validators = [
     {
         name: "StandardOperationVerb"
         configuration: {
-            verbs: ["Create", "Get", "List", "Update", "Delete", "Search", "Send", "Patch", "Bulk", "Validate"]
+            verbs: ["Create", "Get", "List", "Update", "Delete", "Search", "Send", "Patch", "Put", "Bulk", "Validate"]
         }
     }
     {
