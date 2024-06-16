@@ -20,7 +20,7 @@ val updatePackageVersions = tasks.register<Exec>("UpdatePackageVersions") {
     group = "build"
 
     workingDir(projectDir)
-    commandLine("git", "tag", "--list", "v*")
+    commandLine("git", "tag", "--sort=version:refname", "--list", "v*")
     standardOutput = ByteArrayOutputStream()
 
     doLast {

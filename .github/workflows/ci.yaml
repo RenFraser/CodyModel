@@ -33,7 +33,7 @@ jobs:
         run: git fetch --tags
 
       - name: Create Temp Version File
-        run: "git tag --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
+        run: "git tag --sort=version:refname --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
 
       - name: Create Changelog
         uses: TriPSs/conventional-changelog-action@v5
@@ -138,7 +138,7 @@ jobs:
         run: git fetch --tags
 
       - name: Create Temp Version File
-        run: "git tag --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
+        run: "git tag --sort=version:refname --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
 
       - name: Create Changelog
         uses: TriPSs/conventional-changelog-action@v5
