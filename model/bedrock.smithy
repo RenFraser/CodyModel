@@ -4,59 +4,52 @@ namespace com.cody.model
 
 resource Bedrock {
     operations: [
-        SendText
-        SendImage
-        SendDocument
+        SendMessage
     ]
 }
 
-@mixin
-@suppress(["MissingPaginatedTrait", "StandardOperationVerb"])
-operation BedrockExceptions {
+@http(method: "POST", uri: "/api/bedrock/message")
+operation SendMessage with [StandardExceptions] {
+    input := {
+        @required
+        messages: Messages
+
+        @required
+        model: Model
+
+        participant: Participant
+    }
+
+    output := {
+        @required
+        messages: Messages
+
+        participant: Participant
+    }
+
     errors: [
         InputLimitExceededException
         UnexpectedMessageTypeError
     ]
 }
 
-@http(method: "POST", uri: "/api/bedrock/text")
-operation SendText with [StandardExceptions, BedrockExceptions] {
-    input := {
-        @required
-        @httpPayload
-        message: String
-    }
-
-    output := {
-        @required
-        message: String
-    }
+enum Participant {
+    HUMAN
+    ASSISTANT
 }
 
-@http(method: "POST", uri: "/api/bedrock/image")
-operation SendImage with [StandardExceptions, BedrockExceptions] {
-    input := {
-        @required
-        @httpPayload
-        image: Blob
-    }
-
-    output := {
-        @required
-        message: String
-    }
+structure Message {
+    images: Images
+    documents: Documents
+    text: String
 }
 
-@http(method: "POST", uri: "/api/bedrock/document")
-operation SendDocument with [StandardExceptions, BedrockExceptions] {
-    input := {
-        @required
-        @httpPayload
-        document: Blob
-    }
+list Messages {
+    member: Message
+}
 
-    output := {
-        @required
-        message: String
-    }
+enum Model {
+    OPUS
+    SONNET
+    HAIKU
 }
