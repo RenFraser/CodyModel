@@ -22,15 +22,15 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'corretto'
-
-      - name: Fetch Tags
-        run: git fetch --tags
 
       - name: Create Temp Version File
         run: "git tag --sort=version:refname --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
@@ -133,9 +133,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-
-      - name: Fetch Tags
-        run: git fetch --tags
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Create Temp Version File
         run: "git tag --sort=version:refname --list 'v*' | tail -n 1 | jq -R 'ltrimstr(\"v\") | {\"version\": .}' > version.json"
