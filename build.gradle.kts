@@ -58,7 +58,7 @@ repositories {
 dependencies {
     implementation("software.amazon.smithy.typescript:smithy-typescript-codegen:0.21.1")
     implementation("software.amazon.smithy.typescript:smithy-aws-typescript-codegen:0.21.1")
-    implementation("software.amazon.smithy:smithy-model:1.49.0")
+    implementation("software.amazon.smithy:smithy-model:1.50.0")
     implementation("software.amazon.smithy:smithy-validation-model:1.49.0")
     implementation("software.amazon.smithy:smithy-linters:1.50.0")
     implementation("software.amazon.smithy:smithy-aws-traits:1.49.0")
