@@ -61,5 +61,5 @@ dependencies {
     implementation("software.amazon.smithy:smithy-model:1.50.0")
     implementation("software.amazon.smithy:smithy-validation-model:1.49.0")
     implementation("software.amazon.smithy:smithy-linters:1.50.0")
-    implementation("software.amazon.smithy:smithy-aws-traits:1.49.0")
+    implementation("software.amazon.smithy:smithy-aws-traits:1.50.0")
 }
