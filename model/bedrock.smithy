@@ -16,15 +16,11 @@ operation SendMessage with [StandardExceptions] {
 
         @required
         model: Model
-
-        participant: Participant
     }
 
     output := {
         @required
         messages: Messages
-
-        participant: Participant
     }
 
     errors: [
@@ -39,6 +35,7 @@ enum Participant {
 }
 
 structure Message {
+    participant: Participant
     images: Images
     documents: Documents
     text: String
